@@ -1,4 +1,9 @@
 <?php
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 final class UrPayUtil {
 
     public function get(
@@ -13,7 +18,7 @@ final class UrPayUtil {
                 return $this->manageObtainPostVars($key, $filter);
 
             case 'get':
-                return $this->manageObtainGetVars();
+                return $this->manageObtainGetVars($key, $filter);
 
         }
 

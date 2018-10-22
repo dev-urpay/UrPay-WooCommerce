@@ -1,12 +1,16 @@
 <?php
 /*
 Plugin Name: UrPay WooCommerce
-Plugin URI: http://www.urpay.co/
+Plugin URI: https://github.com/dev-urpay/UrPay-WooCommerce
 Description: Plugin para Wordpress de UrPay
 Version: 1.0
 Author: UrPay
 Author URI: http://www.urpay.co/
 */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 add_action('plugins_loaded', 'woocommerce_urpay_gateway', 0);
 
@@ -225,7 +229,7 @@ function woocommerce_urpay_gateway() {
 
             $form = '<form action="' . $this->gateway_url . '" method="post" id="urpay_form">';
             $form .= implode('', $urpay_args);
-            $form .= '<input type="submit" id="pay_urpay" value="' . __('Pagar', 'lg_urpay') . '" />
+            $form .= '<input type="submit" name="pay_urpay" id="pay_urpay" value="' . __('Pagar', 'lg_urpay') . '" />
             </form>';
 
             return $form;

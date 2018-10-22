@@ -1,7 +1,13 @@
 <?php
-require_once '../../../wp-blog-header.php';
+$script_path = dirname(__FILE__);
+$path = realpath($script_path . '/./');
+$file_path = explode('wp-content', $path);
+define('WP_USE_THEMES', false);
+
+require('' . $file_path[0] . '/wp-blog-header.php');
 require_once __DIR__.'/class.urpayutil.php';
 require_once './urpay-core.php';
+
 get_header('shop');
 
 $util = new UrPayUtil;
