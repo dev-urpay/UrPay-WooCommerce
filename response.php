@@ -34,14 +34,19 @@ if ($util->validateSignatureResponse($a_commerce, $i_commerce, $tx_reference, $t
 	if (($tx_state === 1) && ($tx_state_text == 'COMPLETE')) {
 		$status_tx = 'Transacción aprobada';
 		$thanks_msg = '¡Gracias por tu compra!';
+		$order->payment_complete();
 	} else if (($tx_state === 2) && ($tx_state_text == 'PENDING')) {
 		$status_tx = 'Transacción pendiente de aprobación.';
+		$order->update_status('pending', __('Transaccion pendiente', 'woothemes'));
 	} else if (($tx_state == 3) && ($tx_state_text == 'REJECTED')) {
 		$status_tx = 'Transacción rechazada';
+		$order->update_status('failed', __('Transaccion rechazada', 'woothemes'));
 	} else if (($tx_state === 4) && ($tx_state_text == 'FAILED')) {
 		$status_tx = 'Transacción fallida';
+		$order->update_status('failed', __('Transaccion fallida', 'woothemes'));
 	} else {
 		$status_tx = 'Transacción fallida';
+		$order->update_status('failed', __('Transaccion fallida', 'woothemes'));
 	}
 
 	$html = '
@@ -56,7 +61,7 @@ if ($util->validateSignatureResponse($a_commerce, $i_commerce, $tx_reference, $t
 			</tr>
 			<tr align="right">
 				<td>ID de la transacci&oacute;n</td>
-				<td>'.$tx_id.'</td>
+				<td>'.$tx_transaction_id.'</td>
 			</tr>
 			<tr align="right">
 				<td>Referencia de la venta</td>

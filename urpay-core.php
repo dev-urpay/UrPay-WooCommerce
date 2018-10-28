@@ -8,10 +8,6 @@ Author: UrPay
 Author URI: http://www.urpay.co/
 */
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 add_action('plugins_loaded', 'woocommerce_urpay_gateway', 0);
 
 function woocommerce_urpay_gateway() {
@@ -72,7 +68,7 @@ function woocommerce_urpay_gateway() {
 		 */
 		function init_form_fields() {
 
-            $domain = site_url();
+            $wp_domain = site_url();
 
 			$this->form_fields = array(
 
@@ -107,15 +103,17 @@ function woocommerce_urpay_gateway() {
                     'title' => __('Página de respuesta'),
                     'type' => 'text',
                     'description' => __('URL de la página mostrada después de finalizar el pago. No olvide cambiar su dominio.', 'lg_urpay'),
-                    'default' => __(''.$domain.'/wp-content/plugins/woocommerce-urpay/response.php', 'lg_urpay')
+                    'default' => __(''.$wp_domain.'/wp-content/plugins/woocommerce-urpay/response.php', 'lg_urpay')
                 ),
                 'confirmation_page' => array(
                     'title' => __('Página de confirmación'),
                     'type' => 'text',
                     'description' => __('URL de la página que recibe la respuesta definitiva sobre los pagos. No olvide cambiar su dominio.', 'lg_urpay'),
-                    'default' => __(''.$domain.'/wp-content/plugins/woocommerce-urpay/confirmation.php', 'lg_urpay')
+                    'default' => __(''.$wp_domain.'/wp-content/plugins/woocommerce-urpay/confirmation.php', 'lg_urpay')
                 )
+
 			);
+
 		}
 
 		/**
@@ -140,7 +138,7 @@ function woocommerce_urpay_gateway() {
 		 */
 		function receipt_page($order){
 			echo '<p>'.__('Gracias por su pedido, da clic en el botón que aparece para continuar el pago con UrPay.', 'lg_urpay').'</p>';
-			echo $this -> generateFormUrPay($order);
+			echo $this->generateFormUrPay($order);
 		}
 
 		/**
@@ -216,7 +214,7 @@ function woocommerce_urpay_gateway() {
             $urpay_args = array();
 
 			foreach ($parameters_args as $key => $value) {
-				$urpay_args[] = $key . '=' . $value;
+				$urpay_args[] = $key.'='.$value;
             }
 
 			$params_post = implode('&', $urpay_args);
@@ -227,7 +225,7 @@ function woocommerce_urpay_gateway() {
 			    $urpay_args[] = '<input type="hidden" name="'.$key.'" value="'.$value.'"/>';
             }
 
-            $form = '<form action="' . $this->gateway_url . '" method="post" id="urpay_form">';
+            $form = '<form action="' . $this->gateway_url . '" method="post" enctype="application/x-www-form-urlencoded" id="urpay_form">';
             $form .= implode('', $urpay_args);
             $form .= '<input type="submit" name="pay_urpay" id="pay_urpay" value="' . __('Pagar', 'lg_urpay') . '" />
             </form>';
@@ -287,4 +285,6 @@ function woocommerce_urpay_gateway() {
     }
 
 	add_filter('woocommerce_payment_gateways', 'add_urpay' );
+
 }
+?>

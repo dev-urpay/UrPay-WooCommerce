@@ -36,5 +36,4 @@ if ( $util->validateSignatureResponse($a_commerce, $i_commerce, $tx_reference, $
 	}
 
 }
-return;
 ?>

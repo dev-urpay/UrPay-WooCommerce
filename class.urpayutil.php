@@ -1,9 +1,4 @@
 <?php
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 final class UrPayUtil {
 
     public function get(
@@ -145,9 +140,7 @@ final class UrPayUtil {
         $hash = hash_hmac($h, $data, $private_key);
 
         if ((!empty($hash)) && ($hash !== false)) {
-
             return $hash;
-
         } else {
             return false;
         }
