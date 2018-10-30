@@ -1,12 +1,10 @@
 <?php
-$script_path = dirname(__FILE__);
-$path = realpath($script_path . '/./');
-$file_path = explode('wp-content', $path);
-define('WP_USE_THEMES', false);
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-require('' . $file_path[0] . '/wp-blog-header.php');
 require_once __DIR__.'/class.urpayutil.php';
-require_once './urpay-core.php';
+require_once __DIR__.'/urpay-core.php';
 
 $util = new UrPayUtil;
 
@@ -18,6 +16,10 @@ $tx_amount = $util->get('post', 'tx_amount');
 $tx_currency = $util->get('post', 'tx_currency');
 $tx_state = $util->get('post', 'tx_status');
 $tx_state_text = $util->get('post', 'tx_status_text');
+
+if (!empty($tx_amount)) {
+	$tx_amount = number_format($tx_amount, 2, '.', '');
+}
 
 if ( $util->validateSignatureResponse($a_commerce, $i_commerce, $tx_reference, $tx_amount, $tx_currency, $tx_state, $tx_state_text, $tx_signature) ) {
 

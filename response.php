@@ -1,12 +1,10 @@
 <?php
-$script_path = dirname(__FILE__);
-$path = realpath($script_path . '/./');
-$file_path = explode('wp-content', $path);
-define('WP_USE_THEMES', false);
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-require('' . $file_path[0] . '/wp-blog-header.php');
 require_once __DIR__.'/class.urpayutil.php';
-require_once './urpay-core.php';
+require_once __DIR__.'/urpay-core.php';
 
 get_header('shop');
 
@@ -23,13 +21,17 @@ $tx_currency = $util->get('get', 'tx_currency');
 $tx_state = $util->get('get', 'tx_status');
 $tx_state_text = $util->get('get', 'tx_status_text');
 
-$tx_amount = number_format($tx_amount, 2, '.', '');
+if (!empty($tx_amount)) {
+	$tx_amount = number_format($tx_amount, 2, '.', '');
+}
 
 $urpay = new WC_UrPay;
 
 if ($util->validateSignatureResponse($a_commerce, $i_commerce, $tx_reference, $tx_amount, $tx_currency, $tx_state, $tx_state_text, $tx_signature)) {
 
 	$order = new WC_Order($tx_reference);
+
+	$thanks_msg = '';
 
 	if (($tx_state === 1) && ($tx_state_text == 'COMPLETE')) {
 		$status_tx = 'Transacción aprobada';
@@ -92,7 +94,7 @@ if ($util->validateSignatureResponse($a_commerce, $i_commerce, $tx_reference, $t
 	echo $html;
 
 } else {
-	echo 'Ocurrió un error validando los datos de la transacción';
+	echo '<h2 style="text-align:center;">Ocurrió un error validando los datos de la transacción.</h2>';
 }
 get_footer('shop');
 ?>

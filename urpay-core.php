@@ -8,6 +8,10 @@ Author: UrPay
 Author URI: http://www.urpay.co/
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 add_action('plugins_loaded', 'woocommerce_urpay_gateway', 0);
 
 function woocommerce_urpay_gateway() {
@@ -103,13 +107,13 @@ function woocommerce_urpay_gateway() {
                     'title' => __('Página de respuesta'),
                     'type' => 'text',
                     'description' => __('URL de la página mostrada después de finalizar el pago. No olvide cambiar su dominio.', 'lg_urpay'),
-                    'default' => __(''.$wp_domain.'/wp-content/plugins/woocommerce-urpay/response.php', 'lg_urpay')
+                    'default' => __(''.$wp_domain.'/response-urpay/', 'lg_urpay')
                 ),
                 'confirmation_page' => array(
                     'title' => __('Página de confirmación'),
                     'type' => 'text',
                     'description' => __('URL de la página que recibe la respuesta definitiva sobre los pagos. No olvide cambiar su dominio.', 'lg_urpay'),
-                    'default' => __(''.$wp_domain.'/wp-content/plugins/woocommerce-urpay/confirmation.php', 'lg_urpay')
+                    'default' => __(''.$wp_domain.'/confirm-pay-urpay/', 'lg_urpay')
                 )
 
 			);
@@ -285,6 +289,63 @@ function woocommerce_urpay_gateway() {
     }
 
 	add_filter('woocommerce_payment_gateways', 'add_urpay' );
+
+    function rw( $wp_rewrite ) {
+
+        $wp_rewrite->rules = array_merge(
+            ['response-urpay/?$' => 'index.php?pay-response=1'],
+            ['confirm-pay-urpay/?$' => 'index.php?pay-confirmation=1'],
+            $wp_rewrite->rules
+        );
+
+        return $wp_rewrite->rules;
+
+    }
+
+    function rw_c( $query_vars ) {
+        $query_vars[] = 'pay-response';
+        return $query_vars;
+    }
+
+    function rw_r() {
+
+        global $wp_query;
+
+        $wp_query->is_404 = false;
+
+        $custom = intval( get_query_var( 'pay-response' ) );
+
+        if ( !empty($custom) ) {
+            header("HTTP/1.1 200 OK");
+            require_once(plugin_dir_path( __FILE__ ) . 'response.php');
+            exit;
+        }
+
+    }
+
+    function rwc_c( $query_vars ) {
+        $query_vars[] = 'pay-confirmation';
+        return $query_vars;
+    }
+
+    function rwc_r() {
+
+        $custom = intval( get_query_var( 'pay-confirmation' ) );
+
+        if ( !empty($custom) ) {
+            header("HTTP/1.1 200 OK");
+            require_once(plugin_dir_path( __FILE__ ) . 'confirmation.php');
+            exit;
+        }
+
+    }
+
+    add_filter('generate_rewrite_rules', 'rw');
+    add_filter('query_vars', 'rw_c');
+    add_action('template_redirect', 'rw_r');
+
+    add_filter('query_vars', 'rwc_c');
+    add_action('template_redirect', 'rwc_r');
 
 }
 ?>

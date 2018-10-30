@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 final class UrPayUtil {
 
     public function get(
@@ -63,7 +68,7 @@ final class UrPayUtil {
 
     public function validateSignatureResponse($a_commerce, $i_commerce, $tx_reference, $tx_amount, $tx_currency, $tx_state, $tx_state_text, $tx_signature) {
 
-        $payu = new WC_UrPay;
+        $urpay = new WC_UrPay;
         $public_key = $a_commerce;
         $id_commerce = $i_commerce;
 
