@@ -12,7 +12,9 @@ Plugin para recibir pagos en línea desde cualquier parte del mundo.
 
 == Descripción ==
 
-UrPay es una pasarela de pagos la cual recibe pagos con tarjeta de crédito, Efecty, Baloto y PSE. Nuestra tarifa de 2.99% + 750 COP es de las más bajas del mercado. Los tiempos de desembolso de dinero a tu cuenta bancaria varían de 48 a máximo 72 horas.
+UrPay es una pasarela de pagos la cual acepta tarjetas de crédito, pagos en Efecty, Baloto y PSE. Nuestra tarifa de 2.99% + 750 COP es una de las más bajas del mercado. Los tiempos de desembolso de dinero a tu cuenta bancaria varían de 48 a máximo 72 horas.
+
+Abre tú cuenta sin costo alguno dando clic [Aquí](https://dash.urpay.co/register)
 
 Periodicamente vamos a estar añadiendo nuevas y novedosas formas de pago.
 
@@ -25,7 +27,7 @@ Periodicamente vamos a estar añadiendo nuevas y novedosas formas de pago.
 
 == Preguntas frecuentes ==
 
-= ¿Dónde consigo las credenciales Public Key, Private Key? =
+= ¿Dónde consigo las credenciales Public Key, Private Key y ID Commerce? =
 
 Debes [Iniciar sesión](https:dash.urpay.co/login) o [Registrarte](https://dash.urpay.co/register) en UrPay y en la sección de credenciales podrás ver estos datos.
 
