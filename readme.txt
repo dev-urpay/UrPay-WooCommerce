@@ -1,9 +1,9 @@
-=== UrPay WooCommerce - Pagos en línea ===
+﻿=== UrPay WooCommerce - Pagos en línea ===
 Contributors: urpay
 Tags: payments, gateway, pagos en linea colombia, payment gateway, woocommerce
 Requires at least: 3.8
-Tested up to: 4.9
-Stable tag: 4.9
+Tested up to: 5.0
+Stable tag: 1.0.5
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html

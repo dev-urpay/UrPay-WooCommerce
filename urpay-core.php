@@ -3,7 +3,7 @@
 Plugin Name: UrPay WooCommerce
 Plugin URI: https://github.com/dev-urpay/UrPay-WooCommerce
 Description: Plugin para Wordpress de UrPay
-Version: 1.0
+Version: 1.0.5
 Author: UrPay
 Author URI: http://www.urpay.co/
 */
